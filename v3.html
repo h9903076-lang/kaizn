@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -232,7 +231,6 @@
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEDQLqbdGADzy3fu9T1DyMsRl5ajFFJ7XuJ_GjG6j5vLQJo_bF1N_Yx2aEbNQHo4SwbA/exec";
 
-  // برنامه کاری هفته بر اساس JS getDay(): 0=یکشنبه, 1=دوشنبه, 2=سه‌شنبه, 3=چهارشنبه, 4=پنج‌شنبه, 5=جمعه, 6=شنبه
   const WEEKLY_SCHEDULE = {
     6: { open: true, start: 20 * 60, end: 23 * 60, label: "نوبت کاری شنبه (۲۰:۰۰ تا ۲۳:۰۰)" },
     0: { open: true, start: 20 * 60, end: 22 * 60 + 30, label: "نوبت کاری یکشنبه (۲۰:۰۰ تا ۲۲:۳۰)" },
@@ -280,9 +278,7 @@
   const pad = (n) => String(n).padStart(2, '0');
 
   function minToTime(m) {
-    const h = Math.floor(m / 60);
-    const min = m % 60;
-    return pad(h) + ":" + pad(min);
+    return pad(Math.floor(m / 60)) + ":" + pad(m % 60);
   }
 
   function timeToMin(t) {
@@ -292,13 +288,16 @@
     return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
   }
 
+  function formatGregorianYMD(dObj) {
+    return dObj.getFullYear() + "-" + pad(dObj.getMonth() + 1) + "-" + pad(dObj.getDate());
+  }
+
   function buildFullDateLabel(jy, jm, jd) {
     const gDate = jalaliToGregorian(jy, jm, jd);
     const wName = jWeekdays[gDate.getDay()];
     return wName + " " + toFa(jd) + " " + jMonths[jm] + " (" + jy + "/" + pad(jm) + "/" + pad(jd) + ")";
   }
 
-  // پیدا کردن امروز یا اولین روز کاری بعدی (اگر امروز تعطیل باشد)
   const now = new Date();
   const todayJ = gregorianToJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
 
@@ -312,11 +311,13 @@
   let viewMonth = initJ[1];
   let selectedJ = [initJ[0], initJ[1], initJ[2]];
   let selectedDateStr = `${initJ[0]}/${pad(initJ[1])}/${pad(initJ[2])}`;
+  let selectedGDateStr = formatGregorianYMD(initialDateObj);
   let selectedDateFa = `${toFa(initJ[2])} ${jMonths[initJ[1]]} ${toFa(initJ[0])}`;
   let selectedDateLabel = buildFullDateLabel(initJ[0], initJ[1], initJ[2]);
 
   let currentService = { name: "اصلاح صورت", dur: 20 };
   let selectedSlot = null;
+  let allServerBookings = [];
   let bookedBookings = [];
 
   function showToast(msg, isSuccess) {
@@ -390,12 +391,13 @@
         cell.onclick = function() {
           selectedJ = [viewYear, viewMonth, d];
           selectedDateStr = dateStr;
+          selectedGDateStr = formatGregorianYMD(gDate);
           selectedDateFa = toFa(d) + " " + jMonths[viewMonth] + " " + toFa(viewYear);
           selectedDateLabel = buildFullDateLabel(viewYear, viewMonth, d);
           selectedSlot = null;
           document.getElementById('sumTime').textContent = "انتخاب نشده";
           renderCalendar();
-          fetchDayBookings();
+          filterDayBookings();
         };
       }
       grid.appendChild(cell);
@@ -423,48 +425,50 @@
     viewMonth = j[1];
     selectedJ = [j[0], j[1], j[2]];
     selectedDateStr = j[0] + "/" + pad(j[1]) + "/" + pad(j[2]);
+    selectedGDateStr = formatGregorianYMD(dObj);
     selectedDateFa = toFa(j[2]) + " " + jMonths[j[1]] + " " + toFa(j[0]);
     selectedDateLabel = buildFullDateLabel(j[0], j[1], j[2]);
     selectedSlot = null;
     document.getElementById('sumTime').textContent = "انتخاب نشده";
     renderCalendar();
-    fetchDayBookings();
+    filterDayBookings();
   }
 
-  async function fetchDayBookings() {
+  async function fetchAllBookings() {
     document.getElementById('loadingSlots').style.display = 'block';
     document.getElementById('slotsContainer').style.opacity = '0.4';
-    bookedBookings = [];
 
     try {
-      const res = await fetch(SCRIPT_URL + "?action=get&date=" + encodeURIComponent(selectedDateStr) + "&t=" + Date.now());
+      const res = await fetch(SCRIPT_URL + "?t=" + Date.now());
       const data = await res.json();
-
-      let rawList = [];
-      if (Array.isArray(data)) rawList = data;
-      else if (data && Array.isArray(data.bookings)) rawList = data.bookings;
-      else if (data && Array.isArray(data.booked)) rawList = data.booked;
-      else if (data && Array.isArray(data.slots)) rawList = data.slots;
-
-      rawList.forEach(function(item) {
-        if (typeof item === 'string') {
-          const sMin = timeToMin(item);
-          if (sMin > 0) bookedBookings.push({ start: sMin, end: sMin + 20 });
-        } else if (item && item.time) {
-          const sMin = timeToMin(item.time);
-          const dur = parseInt(item.duration, 10) || 20;
-          if (sMin > 0) bookedBookings.push({ start: sMin, end: sMin + dur });
-        }
-      });
+      if (data && Array.isArray(data.bookings)) {
+        allServerBookings = data.bookings;
+      }
     } catch (e) {}
+
+    document.getElementById('loadingSlots').style.display = 'none';
+    document.getElementById('slotsContainer').style.opacity = '1';
+    filterDayBookings();
+  }
+
+  function filterDayBookings() {
+    bookedBookings = [];
+
+    allServerBookings.forEach(function(item) {
+      const itemDate = String(item.date || "").trim();
+      const itemJDate = String(item.jDate || "").trim();
+      if (itemDate === selectedGDateStr || itemDate === selectedDateStr || itemJDate.indexOf(selectedDateStr) !== -1) {
+        const sMin = timeToMin(item.time);
+        const dur = parseInt(item.duration, 10) || 20;
+        if (sMin > 0) bookedBookings.push({ start: sMin, end: sMin + dur });
+      }
+    });
 
     try {
       const localSaved = JSON.parse(localStorage.getItem("parsa_booked_" + selectedDateStr) || "[]");
       localSaved.forEach(function(b) { bookedBookings.push(b); });
     } catch (e) {}
 
-    document.getElementById('loadingSlots').style.display = 'none';
-    document.getElementById('slotsContainer').style.opacity = '1';
     renderSlots();
   }
 
@@ -551,17 +555,11 @@
     btn.disabled = true;
     btn.textContent = "در حال بررسی و ثبت قطعی نوبت...";
 
-    // ارسال تاریخ با تمام نام‌های احتمالی برای نمایش قطعی در پیام تلگرام
     const payload = {
-      action: "book",
-      date: selectedDateLabel,
-      rawDate: selectedDateStr,
-      dateLabel: selectedDateLabel,
-      dateFa: selectedDateLabel,
-      jalaliDate: selectedDateLabel,
-      persianDate: selectedDateLabel,
+      jDate: selectedDateLabel,
+      gDate: selectedGDateStr,
       time: selectedSlot,
-      service: currentService.name + " (" + toFa(currentService.dur) + " دقیقه)",
+      service: currentService.name,
       duration: currentService.dur,
       name: name,
       phone: phone
@@ -578,7 +576,7 @@
         showToast("⛔ متأسفانه همین الان این ساعت توسط نفر دیگری رزرو شد! ساعت دیگری انتخاب کنید.");
         selectedSlot = null;
         document.getElementById('sumTime').textContent = "انتخاب نشده";
-        await fetchDayBookings();
+        await fetchAllBookings();
       } else {
         confirmLocalBooking();
       }
@@ -595,6 +593,12 @@
     const sMin = timeToMin(selectedSlot);
     const newBlock = { start: sMin, end: sMin + currentService.dur };
     bookedBookings.push(newBlock);
+    allServerBookings.push({
+      date: selectedGDateStr,
+      jDate: selectedDateLabel,
+      time: selectedSlot,
+      duration: currentService.dur
+    });
     try {
       const prev = JSON.parse(localStorage.getItem("parsa_booked_" + selectedDateStr) || "[]");
       prev.push(newBlock);
@@ -609,7 +613,7 @@
   }
 
   renderCalendar();
-  fetchDayBookings();
+  fetchAllBookings();
 </script>
 </body>
 </html>
