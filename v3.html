@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -54,18 +54,18 @@
     }
     .section-title { font-size: 14px; font-weight: bold; color: #fff; margin-bottom: 10px; }
 
-    .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .service-btn {
       background: var(--card-inner);
       border: 1.5px solid var(--border);
       border-radius: 12px;
-      padding: 10px 8px;
+      padding: 12px 6px;
       text-align: center;
       cursor: pointer;
       color: var(--text);
     }
-    .service-btn .s-name { font-size: 13px; font-weight: bold; display: block; }
-    .service-btn .s-meta { font-size: 11px; color: var(--muted); margin-top: 3px; display: block; }
+    .service-btn .s-name { font-size: 12.5px; font-weight: bold; display: block; }
+    .service-btn .s-meta { font-size: 11px; color: var(--muted); margin-top: 4px; display: block; }
     .service-btn.active { background: var(--gold); border-color: var(--gold); color: #000; }
     .service-btn.active .s-meta { color: #1f1907; font-weight: bold; }
 
@@ -84,18 +84,20 @@
     .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
     .day-cell {
       aspect-ratio: 1 / 1; background: var(--card-inner); border: 1px solid var(--border);
-      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;
       font-size: 13px; font-weight: bold; color: #fff; cursor: pointer;
     }
     .day-cell.empty { background: transparent; border: none; cursor: default; }
-    .day-cell.past { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; }
+    .day-cell.past { opacity: 0.28; cursor: not-allowed; text-decoration: line-through; }
+    .day-cell.holiday { background: rgba(220, 38, 38, 0.14); border-color: rgba(220, 38, 38, 0.45); color: #f87171; cursor: not-allowed; }
+    .day-cell.holiday small { font-size: 8px; font-weight: normal; margin-top: 1px; }
     .day-cell.selected { background: var(--gold); color: #000; border-color: var(--gold); box-shadow: 0 0 12px rgba(245, 176, 20, 0.4); }
 
-    .legend { display: flex; justify-content: center; gap: 16px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); }
+    .legend { display: flex; justify-content: center; gap: 14px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); }
     .legend span { display: flex; align-items: center; gap: 5px; }
     .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
 
-    .shift-title { font-size: 12px; color: var(--gold); margin: 10px 0 6px 0; font-weight: bold; }
+    .shift-title { font-size: 12.5px; color: var(--gold); margin: 6px 0 10px 0; font-weight: bold; }
     .slots-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
     .slot-btn { border-radius: 10px; padding: 8px 4px; text-align: center; cursor: pointer; border: 1px solid transparent; }
     .slot-btn .t-val { font-size: 13px; font-weight: bold; display: block; direction: ltr; }
@@ -107,6 +109,11 @@
     .slot-btn.full .t-stat { color: #ef4444; }
     .slot-btn.picked { background: var(--gold); border-color: #fff; color: #000; }
     .slot-btn.picked .t-stat { color: #000; font-weight: bold; }
+
+    .holiday-box {
+      background: rgba(220, 38, 38, 0.12); border: 1px solid rgba(220, 38, 38, 0.4);
+      color: #fca5a5; border-radius: 12px; padding: 14px; text-align: center; font-size: 13px;
+    }
 
     .summary-box {
       background: var(--card-inner); border: 1px solid var(--border);
@@ -159,21 +166,17 @@
   <div class="card">
     <div class="section-title">۱. انتخاب نوع اصلاح</div>
     <div class="services-grid" id="servicesGrid">
-      <div class="service-btn active" data-name="اصلاح صورت" data-dur="20" data-price="۸۰ هزار تومان" onclick="selectService(this)">
+      <div class="service-btn active" data-name="اصلاح صورت" data-dur="20" onclick="selectService(this)">
         <span class="s-name">اصلاح صورت</span>
-        <span class="s-meta">۲۰ دقیقه • ۸۰ ت</span>
+        <span class="s-meta">۲۰ دقیقه</span>
       </div>
-      <div class="service-btn" data-name="دور سر (فید)" data-dur="40" data-price="۱۰۰ هزار تومان" onclick="selectService(this)">
+      <div class="service-btn" data-name="دور سر (فید)" data-dur="40" onclick="selectService(this)">
         <span class="s-name">دور سر (فید)</span>
-        <span class="s-meta">۴۰ دقیقه • ۱۰۰ ت</span>
+        <span class="s-meta">۴۰ دقیقه</span>
       </div>
-      <div class="service-btn" data-name="اصلاح کل سر" data-dur="60" data-price="۱۳۰ هزار تومان" onclick="selectService(this)">
+      <div class="service-btn" data-name="اصلاح کل سر" data-dur="60" onclick="selectService(this)">
         <span class="s-name">اصلاح کل سر</span>
-        <span class="s-meta">۶۰ دقیقه • ۱۳۰ ت</span>
-      </div>
-      <div class="service-btn" data-name="سر و صورت کامل" data-dur="60" data-price="۱۸۰ هزار تومان" onclick="selectService(this)">
-        <span class="s-name">سر و صورت کامل</span>
-        <span class="s-meta">۶۰ دقیقه • ۱۸۰ ت</span>
+        <span class="s-meta">۶۰ دقیقه</span>
       </div>
     </div>
   </div>
@@ -194,6 +197,7 @@
     <div class="legend">
       <span><i class="dot" style="background:#22c55e"></i> آزاد</span>
       <span><i class="dot" style="background:#6b7280"></i> تکمیل</span>
+      <span><i class="dot" style="background:#ef4444"></i> تعطیل</span>
       <span><i class="dot" style="background:#f5b014"></i> انتخاب شما</span>
     </div>
   </div>
@@ -204,10 +208,8 @@
     </div>
     <div id="loadingSlots" class="loader" style="display:none;">در حال دریافت وضعیت ساعات از سرور...</div>
     <div id="slotsContainer">
-      <div class="shift-title">نوبت صبح (۱۰:۰۰ تا ۱۳:۰۰)</div>
-      <div class="slots-grid" id="morningSlots"></div>
-      <div class="shift-title" style="margin-top:14px;">نوبت عصر (۱۶:۰۰ تا ۲۲:۰۰)</div>
-      <div class="slots-grid" id="eveningSlots"></div>
+      <div class="shift-title" id="shiftLabel">ساعات کاری این روز</div>
+      <div class="slots-grid" id="daySlots"></div>
     </div>
   </div>
 
@@ -229,6 +231,17 @@
 
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEDQLqbdGADzy3fu9T1DyMsRl5ajFFJ7XuJ_GjG6j5vLQJo_bF1N_Yx2aEbNQHo4SwbA/exec";
+
+  // برنامه کاری هفته بر اساس JS getDay(): 0=یکشنبه, 1=دوشنبه, 2=سه‌شنبه, 3=چهارشنبه, 4=پنج‌شنبه, 5=جمعه, 6=شنبه
+  const WEEKLY_SCHEDULE = {
+    6: { open: true, start: 20 * 60, end: 23 * 60, label: "نوبت کاری شنبه (۲۰:۰۰ تا ۲۳:۰۰)" },
+    0: { open: true, start: 20 * 60, end: 22 * 60 + 30, label: "نوبت کاری یکشنبه (۲۰:۰۰ تا ۲۲:۳۰)" },
+    1: { open: true, start: 17 * 60 + 30, end: 19 * 60 + 30, label: "نوبت کاری دوشنبه (۱۷:۳۰ تا ۱۹:۳۰)" },
+    2: { open: false, label: "سه‌شنبه‌ها پیرایشگاه تعطیل است" },
+    3: { open: true, start: 20 * 60, end: 23 * 60, label: "نوبت کاری چهارشنبه (۲۰:۰۰ تا ۲۳:۰۰)" },
+    4: { open: true, start: 19 * 60 + 30, end: 22 * 60 + 30, label: "نوبت کاری پنج‌شنبه (۱۹:۳۰ تا ۲۲:۳۰)" },
+    5: { open: false, label: "جمعه‌ها پیرایشگاه تعطیل است" }
+  };
 
   function gregorianToJalali(gy, gm, gd) {
     var g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
@@ -266,27 +279,11 @@
   const toEn = (s) => String(s).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
   const pad = (n) => String(n).padStart(2, '0');
 
-  function buildFullDateLabel(jy, jm, jd) {
-    const gDate = jalaliToGregorian(jy, jm, jd);
-    const wName = jWeekdays[gDate.getDay()];
-    return wName + " " + toFa(jd) + " " + jMonths[jm] + " (" + jy + "/" + pad(jm) + "/" + pad(jd) + ")";
+  function minToTime(m) {
+    const h = Math.floor(m / 60);
+    const min = m % 60;
+    return pad(h) + ":" + pad(min);
   }
-
-  const now = new Date();
-  const todayJ = gregorianToJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
-
-  let viewYear = todayJ[0];
-  let viewMonth = todayJ[1];
-  let selectedDateStr = `${todayJ[0]}/${pad(todayJ[1])}/${pad(todayJ[2])}`;
-  let selectedDateFa = `${toFa(todayJ[2])} ${jMonths[todayJ[1]]} ${toFa(todayJ[0])}`;
-  let selectedDateLabel = buildFullDateLabel(todayJ[0], todayJ[1], todayJ[2]);
-
-  let currentService = { name: "اصلاح صورت", dur: 20, price: "۸۰ هزار تومان" };
-  let selectedSlot = null;
-  let bookedBookings = [];
-
-  const morningTimes = ["10:00","10:20","10:40","11:00","11:20","11:40","12:00","12:20","12:40"];
-  const eveningTimes = ["16:00","16:20","16:40","17:00","17:20","17:40","18:00","18:20","18:40","19:00","19:20","19:40","20:00","20:20","20:40","21:00","21:20","21:40"];
 
   function timeToMin(t) {
     const clean = toEn(String(t)).trim();
@@ -294,6 +291,33 @@
     if (parts.length < 2) return 0;
     return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
   }
+
+  function buildFullDateLabel(jy, jm, jd) {
+    const gDate = jalaliToGregorian(jy, jm, jd);
+    const wName = jWeekdays[gDate.getDay()];
+    return wName + " " + toFa(jd) + " " + jMonths[jm] + " (" + jy + "/" + pad(jm) + "/" + pad(jd) + ")";
+  }
+
+  // پیدا کردن امروز یا اولین روز کاری بعدی (اگر امروز تعطیل باشد)
+  const now = new Date();
+  const todayJ = gregorianToJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
+
+  let initialDateObj = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  while (!WEEKLY_SCHEDULE[initialDateObj.getDay()].open) {
+    initialDateObj.setDate(initialDateObj.getDate() + 1);
+  }
+  const initJ = gregorianToJalali(initialDateObj.getFullYear(), initialDateObj.getMonth() + 1, initialDateObj.getDate());
+
+  let viewYear = initJ[0];
+  let viewMonth = initJ[1];
+  let selectedJ = [initJ[0], initJ[1], initJ[2]];
+  let selectedDateStr = `${initJ[0]}/${pad(initJ[1])}/${pad(initJ[2])}`;
+  let selectedDateFa = `${toFa(initJ[2])} ${jMonths[initJ[1]]} ${toFa(initJ[0])}`;
+  let selectedDateLabel = buildFullDateLabel(initJ[0], initJ[1], initJ[2]);
+
+  let currentService = { name: "اصلاح صورت", dur: 20 };
+  let selectedSlot = null;
+  let bookedBookings = [];
 
   function showToast(msg, isSuccess) {
     const t = document.getElementById('toast');
@@ -308,8 +332,7 @@
     el.classList.add('active');
     currentService = {
       name: el.getAttribute('data-name'),
-      dur: parseInt(el.getAttribute('data-dur'), 10),
-      price: el.getAttribute('data-price')
+      dur: parseInt(el.getAttribute('data-dur'), 10)
     };
     selectedSlot = null;
     document.getElementById('sumService').textContent = currentService.name + " (" + toFa(currentService.dur) + " دقیقه)";
@@ -347,17 +370,25 @@
     for (let d = 1; d <= daysCount; d++) {
       const cell = document.createElement('div');
       cell.className = 'day-cell';
-      cell.textContent = toFa(d);
 
       const cellNum = viewYear * 10000 + viewMonth * 100 + d;
       const dateStr = viewYear + "/" + pad(viewMonth) + "/" + pad(d);
+      const gDate = jalaliToGregorian(viewYear, viewMonth, d);
+      const daySchedule = WEEKLY_SCHEDULE[gDate.getDay()];
 
       if (cellNum < todayNum) {
+        cell.textContent = toFa(d);
         cell.classList.add('past');
         cell.onclick = function() { showToast("تاریخ‌های گذشته قابل انتخاب نیستند."); };
+      } else if (!daySchedule.open) {
+        cell.innerHTML = '<span>' + toFa(d) + '</span><small>تعطیل</small>';
+        cell.classList.add('holiday');
+        cell.onclick = function() { showToast("⛔ " + daySchedule.label); };
       } else {
+        cell.textContent = toFa(d);
         if (dateStr === selectedDateStr) cell.classList.add('selected');
         cell.onclick = function() {
+          selectedJ = [viewYear, viewMonth, d];
           selectedDateStr = dateStr;
           selectedDateFa = toFa(d) + " " + jMonths[viewMonth] + " " + toFa(viewYear);
           selectedDateLabel = buildFullDateLabel(viewYear, viewMonth, d);
@@ -382,11 +413,18 @@
   }
 
   function goToday() {
-    viewYear = todayJ[0];
-    viewMonth = todayJ[1];
-    selectedDateStr = todayJ[0] + "/" + pad(todayJ[1]) + "/" + pad(todayJ[2]);
-    selectedDateFa = toFa(todayJ[2]) + " " + jMonths[todayJ[1]] + " " + toFa(todayJ[0]);
-    selectedDateLabel = buildFullDateLabel(todayJ[0], todayJ[1], todayJ[2]);
+    const curNow = new Date();
+    let dObj = new Date(curNow.getFullYear(), curNow.getMonth(), curNow.getDate());
+    while (!WEEKLY_SCHEDULE[dObj.getDay()].open) {
+      dObj.setDate(dObj.getDate() + 1);
+    }
+    const j = gregorianToJalali(dObj.getFullYear(), dObj.getMonth() + 1, dObj.getDate());
+    viewYear = j[0];
+    viewMonth = j[1];
+    selectedJ = [j[0], j[1], j[2]];
+    selectedDateStr = j[0] + "/" + pad(j[1]) + "/" + pad(j[2]);
+    selectedDateFa = toFa(j[2]) + " " + jMonths[j[1]] + " " + toFa(j[0]);
+    selectedDateLabel = buildFullDateLabel(j[0], j[1], j[2]);
     selectedSlot = null;
     document.getElementById('sumTime').textContent = "انتخاب نشده";
     renderCalendar();
@@ -430,65 +468,75 @@
     renderSlots();
   }
 
-  function isSlotBlocked(slotStr, shiftEndMin) {
-    const start = timeToMin(slotStr);
-    const end = start + currentService.dur;
-    if (end > shiftEndMin) return "غیرفعال";
-
-    const todayStr = todayJ[0] + "/" + pad(todayJ[1]) + "/" + pad(todayJ[2]);
-    if (selectedDateStr === todayStr) {
-      const currentNow = new Date();
-      const nowMin = currentNow.getHours() * 60 + currentNow.getMinutes();
-      if (start <= nowMin) return "غیرفعال";
-    }
-
-    for (let i = 0; i < bookedBookings.length; i++) {
-      const b = bookedBookings[i];
-      if (start < b.end && end > b.start) return "تکمیل";
-    }
-    return null;
-  }
-
   function renderSlots() {
-    renderShiftList('morningSlots', morningTimes, 13 * 60);
-    renderShiftList('eveningSlots', eveningTimes, 22 * 60);
-  }
-
-  function renderShiftList(containerId, timesArr, shiftEndMin) {
-    const box = document.getElementById(containerId);
+    const gDate = jalaliToGregorian(selectedJ[0], selectedJ[1], selectedJ[2]);
+    const sched = WEEKLY_SCHEDULE[gDate.getDay()];
+    const box = document.getElementById('daySlots');
+    const labelEl = document.getElementById('shiftLabel');
     box.innerHTML = '';
 
-    timesArr.forEach(function(t) {
-      const blockReason = isSlotBlocked(t, shiftEndMin);
+    if (!sched || !sched.open) {
+      labelEl.textContent = "وضعیت روز";
+      box.style.display = "block";
+      box.innerHTML = '<div class="holiday-box">⛔ ' + (sched ? sched.label : 'تعطیل') + '</div>';
+      return;
+    }
+
+    box.style.display = "grid";
+    labelEl.textContent = sched.label;
+
+    const todayStr = todayJ[0] + "/" + pad(todayJ[1]) + "/" + pad(todayJ[2]);
+    const currentNow = new Date();
+    const nowMin = currentNow.getHours() * 60 + currentNow.getMinutes();
+
+    for (let m = sched.start; m < sched.end; m += 20) {
+      const tStr = minToTime(m);
+      const endMin = m + currentService.dur;
+      let blockReason = null;
+
+      if (endMin > sched.end) {
+        blockReason = "غیرفعال";
+      } else if (selectedDateStr === todayStr && m <= nowMin) {
+        blockReason = "گذشته";
+      } else {
+        for (let i = 0; i < bookedBookings.length; i++) {
+          const b = bookedBookings[i];
+          if (m < b.end && endMin > b.start) {
+            blockReason = "تکمیل";
+            break;
+          }
+        }
+      }
+
       const btn = document.createElement('div');
       btn.className = 'slot-btn';
 
       if (blockReason) {
         btn.classList.add('full');
-        btn.innerHTML = '<span class="t-val">' + toFa(t) + '</span><span class="t-stat">' + blockReason + '</span>';
+        btn.innerHTML = '<span class="t-val">' + toFa(tStr) + '</span><span class="t-stat">' + blockReason + '</span>';
         btn.onclick = function() {
           if (blockReason === 'تکمیل') {
-            showToast("⛔ ساعت " + toFa(t) + " قبلاً پر شده یا با نوبت بعدی تداخل دارد!");
+            showToast("⛔ ساعت " + toFa(tStr) + " قبلاً پر شده یا با نوبت بعدی تداخل دارد!");
           } else {
             showToast("⛔ این ساعت برای خدمت " + toFa(currentService.dur) + " دقیقه‌ای قابل انتخاب نیست.");
           }
         };
       } else {
-        if (selectedSlot === t) {
+        if (selectedSlot === tStr) {
           btn.classList.add('picked');
-          btn.innerHTML = '<span class="t-val">✓ ' + toFa(t) + '</span><span class="t-stat">انتخاب شما</span>';
+          btn.innerHTML = '<span class="t-val">✓ ' + toFa(tStr) + '</span><span class="t-stat">انتخاب شما</span>';
         } else {
           btn.classList.add('free');
-          btn.innerHTML = '<span class="t-val">' + toFa(t) + '</span><span class="t-stat">آزاد</span>';
+          btn.innerHTML = '<span class="t-val">' + toFa(tStr) + '</span><span class="t-stat">آزاد</span>';
         }
         btn.onclick = function() {
-          selectedSlot = t;
-          document.getElementById('sumTime').textContent = "ساعت " + toFa(t) + " (" + toFa(currentService.dur) + " دقیقه)";
+          selectedSlot = tStr;
+          document.getElementById('sumTime').textContent = "ساعت " + toFa(tStr) + " (" + toFa(currentService.dur) + " دقیقه)";
           renderSlots();
         };
       }
       box.appendChild(btn);
-    });
+    }
   }
 
   async function bookAppointment() {
@@ -503,15 +551,18 @@
     btn.disabled = true;
     btn.textContent = "در حال بررسی و ثبت قطعی نوبت...";
 
+    // ارسال تاریخ با تمام نام‌های احتمالی برای نمایش قطعی در پیام تلگرام
     const payload = {
       action: "book",
-      date: selectedDateStr,
+      date: selectedDateLabel,
+      rawDate: selectedDateStr,
       dateLabel: selectedDateLabel,
       dateFa: selectedDateLabel,
+      jalaliDate: selectedDateLabel,
+      persianDate: selectedDateLabel,
       time: selectedSlot,
       service: currentService.name + " (" + toFa(currentService.dur) + " دقیقه)",
       duration: currentService.dur,
-      price: currentService.price,
       name: name,
       phone: phone
     };
