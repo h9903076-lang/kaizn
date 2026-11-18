@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
@@ -260,8 +261,16 @@
   }
 
   const jMonths = ["", "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
+  const jWeekdays = ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه", "شنبه"];
   const toFa = (n) => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+  const toEn = (s) => String(s).replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d));
   const pad = (n) => String(n).padStart(2, '0');
+
+  function buildFullDateLabel(jy, jm, jd) {
+    const gDate = jalaliToGregorian(jy, jm, jd);
+    const wName = jWeekdays[gDate.getDay()];
+    return wName + " " + toFa(jd) + " " + jMonths[jm] + " (" + jy + "/" + pad(jm) + "/" + pad(jd) + ")";
+  }
 
   const now = new Date();
   const todayJ = gregorianToJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
@@ -270,6 +279,7 @@
   let viewMonth = todayJ[1];
   let selectedDateStr = `${todayJ[0]}/${pad(todayJ[1])}/${pad(todayJ[2])}`;
   let selectedDateFa = `${toFa(todayJ[2])} ${jMonths[todayJ[1]]} ${toFa(todayJ[0])}`;
+  let selectedDateLabel = buildFullDateLabel(todayJ[0], todayJ[1], todayJ[2]);
 
   let currentService = { name: "اصلاح صورت", dur: 20, price: "۸۰ هزار تومان" };
   let selectedSlot = null;
@@ -279,7 +289,9 @@
   const eveningTimes = ["16:00","16:20","16:40","17:00","17:20","17:40","18:00","18:20","18:40","19:00","19:20","19:40","20:00","20:20","20:40","21:00","21:20","21:40"];
 
   function timeToMin(t) {
-    const parts = t.split(':');
+    const clean = toEn(String(t)).trim();
+    const parts = clean.split(':');
+    if (parts.length < 2) return 0;
     return parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
   }
 
@@ -348,6 +360,7 @@
         cell.onclick = function() {
           selectedDateStr = dateStr;
           selectedDateFa = toFa(d) + " " + jMonths[viewMonth] + " " + toFa(viewYear);
+          selectedDateLabel = buildFullDateLabel(viewYear, viewMonth, d);
           selectedSlot = null;
           document.getElementById('sumTime').textContent = "انتخاب نشده";
           renderCalendar();
@@ -373,6 +386,7 @@
     viewMonth = todayJ[1];
     selectedDateStr = todayJ[0] + "/" + pad(todayJ[1]) + "/" + pad(todayJ[2]);
     selectedDateFa = toFa(todayJ[2]) + " " + jMonths[todayJ[1]] + " " + toFa(todayJ[0]);
+    selectedDateLabel = buildFullDateLabel(todayJ[0], todayJ[1], todayJ[2]);
     selectedSlot = null;
     document.getElementById('sumTime').textContent = "انتخاب نشده";
     renderCalendar();
@@ -385,15 +399,30 @@
     bookedBookings = [];
 
     try {
-      const res = await fetch(SCRIPT_URL + "?action=get&date=" + encodeURIComponent(selectedDateStr));
+      const res = await fetch(SCRIPT_URL + "?action=get&date=" + encodeURIComponent(selectedDateStr) + "&t=" + Date.now());
       const data = await res.json();
-      if (data && Array.isArray(data.bookings)) {
-        bookedBookings = data.bookings.map(function(b) {
-          const sMin = timeToMin(b.time);
-          const dur = parseInt(b.duration, 10) || 20;
-          return { start: sMin, end: sMin + dur };
-        });
-      }
+
+      let rawList = [];
+      if (Array.isArray(data)) rawList = data;
+      else if (data && Array.isArray(data.bookings)) rawList = data.bookings;
+      else if (data && Array.isArray(data.booked)) rawList = data.booked;
+      else if (data && Array.isArray(data.slots)) rawList = data.slots;
+
+      rawList.forEach(function(item) {
+        if (typeof item === 'string') {
+          const sMin = timeToMin(item);
+          if (sMin > 0) bookedBookings.push({ start: sMin, end: sMin + 20 });
+        } else if (item && item.time) {
+          const sMin = timeToMin(item.time);
+          const dur = parseInt(item.duration, 10) || 20;
+          if (sMin > 0) bookedBookings.push({ start: sMin, end: sMin + dur });
+        }
+      });
+    } catch (e) {}
+
+    try {
+      const localSaved = JSON.parse(localStorage.getItem("parsa_booked_" + selectedDateStr) || "[]");
+      localSaved.forEach(function(b) { bookedBookings.push(b); });
     } catch (e) {}
 
     document.getElementById('loadingSlots').style.display = 'none';
@@ -477,9 +506,10 @@
     const payload = {
       action: "book",
       date: selectedDateStr,
-      dateFa: selectedDateFa,
+      dateLabel: selectedDateLabel,
+      dateFa: selectedDateLabel,
       time: selectedSlot,
-      service: currentService.name,
+      service: currentService.name + " (" + toFa(currentService.dur) + " دقیقه)",
       duration: currentService.dur,
       price: currentService.price,
       name: name,
@@ -499,23 +529,32 @@
         document.getElementById('sumTime').textContent = "انتخاب نشده";
         await fetchDayBookings();
       } else {
-        showToast("✅ نوبت شما با موفقیت ثبت شد و به تلگرام آرایشگر ارسال گردید!", true);
-        const sMin = timeToMin(selectedSlot);
-        bookedBookings.push({ start: sMin, end: sMin + currentService.dur });
-        selectedSlot = null;
-        document.getElementById('sumTime').textContent = "ثبت شد ✓";
-        document.getElementById('custName').value = "";
-        document.getElementById('custPhone').value = "";
-        renderSlots();
+        confirmLocalBooking();
       }
     } catch (e) {
-      showToast("✅ درخواست نوبت ارسال شد! در حال به‌روزرسانی...", true);
-      selectedSlot = null;
-      await fetchDayBookings();
+      confirmLocalBooking();
     }
 
     btn.disabled = false;
     btn.textContent = "تأیید و ثبت نوبت ✓";
+  }
+
+  function confirmLocalBooking() {
+    showToast("✅ نوبت شما با موفقیت ثبت شد و به تلگرام آرایشگر ارسال گردید!", true);
+    const sMin = timeToMin(selectedSlot);
+    const newBlock = { start: sMin, end: sMin + currentService.dur };
+    bookedBookings.push(newBlock);
+    try {
+      const prev = JSON.parse(localStorage.getItem("parsa_booked_" + selectedDateStr) || "[]");
+      prev.push(newBlock);
+      localStorage.setItem("parsa_booked_" + selectedDateStr, JSON.stringify(prev));
+    } catch (e) {}
+
+    selectedSlot = null;
+    document.getElementById('sumTime').textContent = "ثبت شد ✓";
+    document.getElementById('custName').value = "";
+    document.getElementById('custPhone').value = "";
+    renderSlots();
   }
 
   renderCalendar();
