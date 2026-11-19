@@ -19,26 +19,9 @@
       --muted: #9ca3af;
       --border: #2d313c;
     }
-
-    * {
-      box-sizing: border-box;
-      font-family: Tahoma, 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      padding: 14px;
-      line-height: 1.5;
-    }
-
-    .container {
-      max-width: 460px;
-      margin: 0 auto 30px auto;
-    }
+    * { box-sizing: border-box; font-family: Tahoma, 'Segoe UI', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body { background: var(--bg); color: var(--text); padding: 14px; line-height: 1.5; }
+    .container { max-width: 460px; margin: 0 auto 30px auto; }
 
     .header {
       background: linear-gradient(145deg, #1b1e26, #111317);
@@ -49,48 +32,17 @@
       margin-bottom: 14px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     }
-
     .logo-badge {
-      width: 54px;
-      height: 54px;
-      margin: 0 auto 8px auto;
-      border-radius: 50%;
-      border: 2px solid var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      background: rgba(245, 176, 20, 0.1);
+      width: 54px; height: 54px; margin: 0 auto 8px auto;
+      border-radius: 50%; border: 2px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; background: rgba(245, 176, 20, 0.1);
     }
-
-    .header h1 {
-      color: var(--gold);
-      font-size: 21px;
-      font-weight: bold;
-    }
-
-    .header .sub {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 2px;
-    }
-
-    .welcome {
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid var(--border);
-    }
-
-    .welcome h2 {
-      font-size: 15px;
-      color: #fff;
-    }
-
-    .welcome p {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 3px;
-    }
+    .header h1 { color: var(--gold); font-size: 21px; font-weight: bold; }
+    .header .sub { color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .welcome { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); }
+    .welcome h2 { font-size: 15px; color: #fff; }
+    .welcome p { font-size: 12px; color: var(--muted); margin-top: 3px; }
 
     .card {
       background: var(--card);
@@ -99,20 +51,9 @@
       padding: 14px;
       margin-bottom: 14px;
     }
+    .section-title { font-size: 14px; font-weight: bold; color: #fff; margin-bottom: 10px; }
 
-    .section-title {
-      font-size: 14px;
-      font-weight: bold;
-      color: #fff;
-      margin-bottom: 10px;
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
     .service-btn {
       background: var(--card-inner);
       border: 1.5px solid var(--border);
@@ -122,334 +63,90 @@
       cursor: pointer;
       color: var(--text);
     }
+    .service-btn .s-name { font-size: 12.5px; font-weight: bold; display: block; }
+    .service-btn .s-meta { font-size: 11px; color: var(--muted); margin-top: 4px; display: block; }
+    .service-btn.active { background: var(--gold); border-color: var(--gold); color: #000; }
+    .service-btn.active .s-meta { color: #1f1907; font-weight: bold; }
 
-    .service-btn .s-name {
-      font-size: 12.5px;
-      font-weight: bold;
-      display: block;
-    }
-
-    .service-btn .s-meta {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 4px;
-      display: block;
-    }
-
-    .service-btn.active {
-      background: var(--gold);
-      border-color: var(--gold);
-      color: #000;
-    }
-
-    .service-btn.active .s-meta {
-      color: #1f1907;
-      font-weight: bold;
-    }
-
-    .cal-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 12px;
-    }
-
+    .cal-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
     .today-btn {
-      background: rgba(245, 176, 20, 0.15);
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      padding: 5px 10px;
-      border-radius: 8px;
-      font-size: 12px;
-      cursor: pointer;
-      font-weight: bold;
+      background: rgba(245, 176, 20, 0.15); border: 1px solid var(--gold); color: var(--gold);
+      padding: 5px 10px; border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: bold;
     }
-
-    .month-nav {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
+    .month-nav { display: flex; align-items: center; gap: 12px; }
     .nav-arrow {
-      background: var(--card-inner);
-      border: 1px solid var(--border);
-      color: var(--gold);
-      width: 30px;
-      height: 30px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
-      font-weight: bold;
+      background: var(--card-inner); border: 1px solid var(--border); color: var(--gold);
+      width: 30px; height: 30px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold;
     }
-
-    .month-label {
-      font-size: 15px;
-      font-weight: bold;
-      color: #fff;
-      min-width: 95px;
-      text-align: center;
-    }
-
-    .weekdays {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      text-align: center;
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-
-    .days-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 6px;
-    }
-
+    .month-label { font-size: 15px; font-weight: bold; color: #fff; min-width: 95px; text-align: center; }
+    .weekdays { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-size: 12px; color: var(--muted); margin-bottom: 8px; font-weight: bold; }
+    .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
     .day-cell {
-      aspect-ratio: 1 / 1;
-      background: var(--card-inner);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: bold;
-      color: #fff;
-      cursor: pointer;
+      aspect-ratio: 1 / 1; background: var(--card-inner); border: 1px solid var(--border);
+      border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: bold; color: #fff; cursor: pointer;
     }
+    .day-cell.empty { background: transparent; border: none; cursor: default; }
+    .day-cell.past { opacity: 0.28; cursor: not-allowed; text-decoration: line-through; }
+    .day-cell.holiday { background: rgba(220, 38, 38, 0.14); border-color: rgba(220, 38, 38, 0.45); color: #f87171; cursor: not-allowed; }
+    .day-cell.holiday small { font-size: 8px; font-weight: normal; margin-top: 1px; }
+    .day-cell.selected { background: var(--gold); color: #000; border-color: var(--gold); box-shadow: 0 0 12px rgba(245, 176, 20, 0.4); }
 
-    .day-cell.empty {
-      background: transparent;
-      border: none;
-      cursor: default;
-    }
+    .legend { display: flex; justify-content: center; gap: 14px; margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); }
+    .legend span { display: flex; align-items: center; gap: 5px; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
 
-    .day-cell.past {
-      opacity: 0.28;
-      cursor: not-allowed;
-      text-decoration: line-through;
-    }
+    .shift-title { font-size: 12.5px; color: var(--gold); margin: 6px 0 10px 0; font-weight: bold; }
+    .slots-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; }
+    .slot-btn { border-radius: 10px; padding: 8px 4px; text-align: center; cursor: pointer; border: 1px solid transparent; }
+    .slot-btn .t-val { font-size: 13px; font-weight: bold; display: block; direction: ltr; }
+    .slot-btn .t-stat { font-size: 10px; display: block; margin-top: 2px; }
 
-    .day-cell.holiday {
-      background: rgba(220, 38, 38, 0.14);
-      border-color: rgba(220, 38, 38, 0.45);
-      color: #f87171;
-      cursor: not-allowed;
-    }
-
-    .day-cell.holiday small {
-      font-size: 8px;
-      font-weight: normal;
-      margin-top: 1px;
-    }
-
-    .day-cell.selected {
-      background: var(--gold);
-      color: #000;
-      border-color: var(--gold);
-      box-shadow: 0 0 12px rgba(245, 176, 20, 0.4);
-    }
-
-    .legend {
-      display: flex;
-      justify-content: center;
-      gap: 14px;
-      margin-top: 12px;
-      padding-top: 10px;
-      border-top: 1px solid var(--border);
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .legend span {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      display: inline-block;
-    }
-
-    .shift-title {
-      font-size: 12.5px;
-      color: var(--gold);
-      margin: 6px 0 10px 0;
-      font-weight: bold;
-    }
-
-    .slots-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 7px;
-    }
-
-    .slot-btn {
-      border-radius: 10px;
-      padding: 8px 4px;
-      text-align: center;
-      cursor: pointer;
-      border: 1px solid transparent;
-    }
-
-    .slot-btn .t-val {
-      font-size: 13px;
-      font-weight: bold;
-      display: block;
-      direction: ltr;
-    }
-
-    .slot-btn .t-stat {
-      font-size: 10px;
-      display: block;
-      margin-top: 2px;
-    }
-
-    .slot-btn.free {
-      background: var(--green);
-      border-color: var(--green-border);
-      color: #fff;
-    }
-
-    .slot-btn.free .t-stat {
-      color: var(--green-text);
-    }
-
-    .slot-btn.full {
-      background: var(--full-bg);
-      border-color: #374151;
-      color: var(--full-text);
-      cursor: not-allowed;
-    }
-
-    .slot-btn.full .t-stat {
-      color: #ef4444;
-    }
-
-    .slot-btn.picked {
-      background: var(--gold);
-      border-color: #fff;
-      color: #000;
-    }
-
-    .slot-btn.picked .t-stat {
-      color: #000;
-      font-weight: bold;
-    }
+    .slot-btn.free { background: var(--green); border-color: var(--green-border); color: #fff; }
+    .slot-btn.free .t-stat { color: var(--green-text); }
+    .slot-btn.full { background: var(--full-bg); border-color: #374151; color: var(--full-text); cursor: not-allowed; }
+    .slot-btn.full .t-stat { color: #ef4444; }
+    .slot-btn.picked { background: var(--gold); border-color: #fff; color: #000; }
+    .slot-btn.picked .t-stat { color: #000; font-weight: bold; }
 
     .holiday-box {
-      background: rgba(220, 38, 38, 0.12);
-      border: 1px solid rgba(220, 38, 38, 0.4);
-      color: #fca5a5;
-      border-radius: 12px;
-      padding: 14px;
-      text-align: center;
-      font-size: 13px;
+      background: rgba(220, 38, 38, 0.12); border: 1px solid rgba(220, 38, 38, 0.4);
+      color: #fca5a5; border-radius: 12px; padding: 14px; text-align: center; font-size: 13px;
     }
 
     .summary-box {
-      background: var(--card-inner);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 12px;
-      font-size: 13px;
+      background: var(--card-inner); border: 1px solid var(--border);
+      border-radius: 12px; padding: 12px; margin-bottom: 12px; font-size: 13px;
     }
+    .sum-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .sum-row:last-child { margin-bottom: 0; }
+    .sum-row span:first-child { color: var(--muted); }
+    .sum-row span:last-child { color: #fff; font-weight: bold; }
 
-    .sum-row {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 6px;
-    }
-
-    .sum-row:last-child {
-      margin-bottom: 0;
-    }
-
-    .sum-row span:first-child {
-      color: var(--muted);
-    }
-
-    .sum-row span:last-child {
-      color: #fff;
-      font-weight: bold;
-    }
-
-    .input-group {
-      margin-bottom: 10px;
-    }
-
+    .input-group { margin-bottom: 10px; }
     .input-group input {
-      width: 100%;
-      background: var(--card-inner);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 11px 12px;
-      color: #fff;
-      font-size: 14px;
-      outline: none;
+      width: 100%; background: var(--card-inner); border: 1px solid var(--border);
+      border-radius: 10px; padding: 11px 12px; color: #fff; font-size: 14px; outline: none;
     }
-
-    .input-group input:focus {
-      border-color: var(--gold);
-    }
+    .input-group input:focus { border-color: var(--gold); }
 
     .submit-btn {
-      width: 100%;
-      background: var(--gold);
-      color: #000;
-      border: none;
-      border-radius: 12px;
-      padding: 14px;
-      font-size: 15px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 6px 18px rgba(245, 176, 20, 0.3);
+      width: 100%; background: var(--gold); color: #000; border: none;
+      border-radius: 12px; padding: 14px; font-size: 15px; font-weight: bold;
+      cursor: pointer; box-shadow: 0 6px 18px rgba(245, 176, 20, 0.3);
     }
-
-    .submit-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
     #toast {
-      position: fixed;
-      top: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #dc2626;
-      color: #fff;
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: bold;
-      z-index: 9999;
-      display: none;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-      text-align: center;
-      max-width: 90%;
+      position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
+      background: #dc2626; color: #fff; padding: 12px 18px; border-radius: 12px;
+      font-size: 13px; font-weight: bold; z-index: 9999; display: none;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.6); text-align: center; max-width: 90%;
     }
-
-    #toast.success {
-      background: #16a34a;
-    }
-
-    .loader {
-      text-align: center;
-      padding: 12px;
-      color: var(--gold);
-      font-size: 13px;
-    }
+    #toast.success { background: #16a34a; }
+    .loader { text-align: center; padding: 12px; color: var(--gold); font-size: 13px; }
   </style>
 </head>
-
 <body>
 
 <div id="toast"></div>
@@ -492,13 +189,10 @@
         <button type="button" class="nav-arrow" onclick="changeMonth(1)">‹</button>
       </div>
     </div>
-
     <div class="weekdays">
       <div>ش</div><div>ی</div><div>د</div><div>س</div><div>چ</div><div>پ</div><div>ج</div>
     </div>
-
     <div class="days-grid" id="daysGrid"></div>
-
     <div class="legend">
       <span><i class="dot" style="background:#22c55e"></i> آزاد</span>
       <span><i class="dot" style="background:#6b7280"></i> تکمیل</span>
@@ -511,9 +205,7 @@
     <div class="section-title">
       🕒 ساعات نوبت‌دهی - <span id="selectedDateTitle" style="color:var(--gold)"></span>
     </div>
-
     <div id="loadingSlots" class="loader" style="display:none;">در حال دریافت وضعیت ساعات از سرور...</div>
-
     <div id="slotsContainer">
       <div class="shift-title" id="shiftLabel">ساعات کاری این روز</div>
       <div class="slots-grid" id="daySlots"></div>
@@ -526,21 +218,25 @@
       <div class="sum-row"><span>تاریخ انتخابی:</span><span id="sumDate">—</span></div>
       <div class="sum-row"><span>ساعت انتخابی:</span><span id="sumTime" style="color:var(--gold)">انتخاب نشده</span></div>
     </div>
-
     <div class="input-group">
       <input type="text" id="custName" placeholder="نام و نام خانوادگی (مثلاً: علی رضایی)">
     </div>
-
     <div class="input-group">
       <input type="tel" id="custPhone" placeholder="شماره موبایل (مثلاً: 09123456789)" dir="ltr" style="text-align:right;">
     </div>
-
     <button type="button" class="submit-btn" id="submitBtn" onclick="bookAppointment()">تأیید و ثبت نوبت ✓</button>
   </div>
 </div>
 
 <script>
   const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwEDQLqbdGADzy3fu9T1DyMsRl5ajFFJ7XuJ_GjG6j5vLQJo_bF1N_Yx2aEbNQHo4SwbA/exec";
+
+  // پاکسازی خودکار کش‌های تستی قدیمی از حافظه گوشی
+  try {
+    Object.keys(localStorage).forEach(function(k) {
+      if (k.indexOf("parsa_booked_") === 0) localStorage.removeItem(k);
+    });
+  } catch (e) {}
 
   const WEEKLY_SCHEDULE = {
     6: { open: true, start: 20 * 60, end: 23 * 60, label: "نوبت کاری شنبه (۲۰:۰۰ تا ۲۳:۰۰)" },
@@ -560,15 +256,9 @@
     days %= 12053;
     jy += 4 * Math.floor(days / 1461);
     days %= 1461;
-
-    if (days > 365) {
-      jy += Math.floor((days - 1) / 365);
-      days = (days - 1) % 365;
-    }
-
+    if (days > 365) { jy += Math.floor((days - 1) / 365); days = (days - 1) % 365; }
     var jm = (days < 186) ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
     var jd = 1 + ((days < 186) ? (days % 31) : ((days - 186) % 30));
-
     return [jy, jm, jd];
   }
 
@@ -577,30 +267,14 @@
     var days = -355668 + (365 * jy) + (Math.floor(jy / 33) * 8) + Math.floor(((jy % 33) + 3) / 4) + jd + ((jm < 7) ? (jm - 1) * 31 : ((jm - 7) * 30) + 186);
     var gy = 400 * Math.floor(days / 146097);
     days %= 146097;
-
-    if (days > 36524) {
-      gy += 100 * Math.floor(--days / 36524);
-      days %= 36524;
-      if (days >= 365) days++;
-    }
-
+    if (days > 36524) { gy += 100 * Math.floor(--days / 36524); days %= 36524; if (days >= 365) days++; }
     gy += 4 * Math.floor(days / 1461);
     days %= 1461;
-
-    if (days > 365) {
-      gy += Math.floor((days - 1) / 365);
-      days = (days - 1) % 365;
-    }
-
+    if (days > 365) { gy += Math.floor((days - 1) / 365); days = (days - 1) % 365; }
     var gd = days + 1;
     var sal_a = [0, 31, ((gy % 4 === 0 && gy % 100 !== 0) || (gy % 400 === 0)) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var gm = 0;
-
-    while (gm < 13 && gd > sal_a[gm]) {
-      gd -= sal_a[gm];
-      gm++;
-    }
-
+    while (gm < 13 && gd > sal_a[gm]) { gd -= sal_a[gm]; gm++; }
     return new Date(gy, gm - 1, gd);
   }
 
@@ -614,7 +288,6 @@
     return pad(Math.floor(m / 60)) + ":" + pad(m % 60);
   }
 
-  // استخراج دقیق ساعت حتی اگر از گوگل شیت به صورت Date Object طولانی برگشته باشد
   function timeToMin(t) {
     const clean = toEn(String(t)).trim();
     const match = clean.match(/(\d{1,2}):(\d{2})/);
@@ -622,23 +295,17 @@
     return parseInt(match[1], 10) * 60 + parseInt(match[2], 10);
   }
 
-  // استانداردسازی تاریخ برگشتی از سرور به YYYY-MM-DD
   function normalizeServerDate(raw) {
     const s = toEn(String(raw || "")).replace(/^'/, "").trim();
     if (!s) return "";
-
-    const isoMatch = s.match(/(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
-
+    const isoMatch = s.match(/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
     if (isoMatch) {
       return isoMatch[1] + "-" + pad(isoMatch[2]) + "-" + pad(isoMatch[3]);
     }
-
     const parsed = new Date(s);
-
     if (!isNaN(parsed.getTime())) {
       return parsed.getFullYear() + "-" + pad(parsed.getMonth() + 1) + "-" + pad(parsed.getDate());
     }
-
     return s;
   }
 
@@ -656,11 +323,9 @@
   const todayJ = gregorianToJalali(now.getFullYear(), now.getMonth() + 1, now.getDate());
 
   let initialDateObj = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-
   while (!WEEKLY_SCHEDULE[initialDateObj.getDay()].open) {
     initialDateObj.setDate(initialDateObj.getDate() + 1);
   }
-
   const initJ = gregorianToJalali(initialDateObj.getFullYear(), initialDateObj.getMonth() + 1, initialDateObj.getDate());
 
   let viewYear = initJ[0];
@@ -681,23 +346,16 @@
     t.textContent = msg;
     t.className = isSuccess ? 'success' : '';
     t.style.display = 'block';
-    setTimeout(function() {
-      t.style.display = 'none';
-    }, 3500);
+    setTimeout(function() { t.style.display = 'none'; }, 3500);
   }
 
   function selectService(el) {
-    document.querySelectorAll('.service-btn').forEach(function(b) {
-      b.classList.remove('active');
-    });
-
+    document.querySelectorAll('.service-btn').forEach(function(b) { b.classList.remove('active'); });
     el.classList.add('active');
-
     currentService = {
       name: el.getAttribute('data-name'),
       dur: parseInt(el.getAttribute('data-dur'), 10)
     };
-
     selectedSlot = null;
     document.getElementById('sumService').textContent = currentService.name + " (" + toFa(currentService.dur) + " دقیقه)";
     document.getElementById('sumTime').textContent = "انتخاب نشده";
@@ -716,7 +374,6 @@
 
   function renderCalendar() {
     document.getElementById('monthLabel').textContent = jMonths[viewMonth] + " " + toFa(viewYear);
-
     const grid = document.getElementById('daysGrid');
     grid.innerHTML = '';
 
@@ -744,22 +401,14 @@
       if (cellNum < todayNum) {
         cell.textContent = toFa(d);
         cell.classList.add('past');
-        cell.onclick = function() {
-          showToast("تاریخ‌های گذشته قابل انتخاب نیستند.");
-        };
+        cell.onclick = function() { showToast("تاریخ‌های گذشته قابل انتخاب نیستند."); };
       } else if (!daySchedule.open) {
         cell.innerHTML = '<span>' + toFa(d) + '</span><small>تعطیل</small>';
         cell.classList.add('holiday');
-        cell.onclick = function() {
-          showToast("⛔ " + daySchedule.label);
-        };
+        cell.onclick = function() { showToast("⛔ " + daySchedule.label); };
       } else {
         cell.textContent = toFa(d);
-
-        if (dateStr === selectedDateStr) {
-          cell.classList.add('selected');
-        }
-
+        if (dateStr === selectedDateStr) cell.classList.add('selected');
         cell.onclick = function() {
           selectedJ = [viewYear, viewMonth, d];
           selectedDateStr = dateStr;
@@ -767,14 +416,11 @@
           selectedDateFa = toFa(d) + " " + jMonths[viewMonth] + " " + toFa(viewYear);
           selectedDateLabel = buildFullDateLabel(viewYear, viewMonth, d);
           selectedSlot = null;
-
           document.getElementById('sumTime').textContent = "انتخاب نشده";
-
           renderCalendar();
           fetchAllBookings();
         };
       }
-
       grid.appendChild(cell);
     }
 
@@ -784,30 +430,18 @@
 
   function changeMonth(delta) {
     viewMonth += delta;
-
-    if (viewMonth > 12) {
-      viewMonth = 1;
-      viewYear++;
-    }
-
-    if (viewMonth < 1) {
-      viewMonth = 12;
-      viewYear--;
-    }
-
+    if (viewMonth > 12) { viewMonth = 1; viewYear++; }
+    if (viewMonth < 1) { viewMonth = 12; viewYear--; }
     renderCalendar();
   }
 
   function goToday() {
     const curNow = new Date();
     let dObj = new Date(curNow.getFullYear(), curNow.getMonth(), curNow.getDate());
-
     while (!WEEKLY_SCHEDULE[dObj.getDay()].open) {
       dObj.setDate(dObj.getDate() + 1);
     }
-
     const j = gregorianToJalali(dObj.getFullYear(), dObj.getMonth() + 1, dObj.getDate());
-
     viewYear = j[0];
     viewMonth = j[1];
     selectedJ = [j[0], j[1], j[2]];
@@ -816,9 +450,7 @@
     selectedDateFa = toFa(j[2]) + " " + jMonths[j[1]] + " " + toFa(j[0]);
     selectedDateLabel = buildFullDateLabel(j[0], j[1], j[2]);
     selectedSlot = null;
-
     document.getElementById('sumTime').textContent = "انتخاب نشده";
-
     renderCalendar();
     fetchAllBookings();
   }
@@ -828,9 +460,9 @@
     document.getElementById('slotsContainer').style.opacity = '0.4';
 
     try {
-      const res = await fetch(SCRIPT_URL + "?t=" + Date.now());
+      const uniqueUrl = SCRIPT_URL + "?nocache=" + Date.now() + "_" + Math.random().toString(36).slice(2);
+      const res = await fetch(uniqueUrl, { cache: "no-store" });
       const data = await res.json();
-
       if (data && Array.isArray(data.bookings)) {
         allServerBookings = data.bookings;
       }
@@ -838,7 +470,6 @@
 
     document.getElementById('loadingSlots').style.display = 'none';
     document.getElementById('slotsContainer').style.opacity = '1';
-
     filterDayBookings();
   }
 
@@ -853,19 +484,11 @@
       if (isSameDay) {
         const sMin = timeToMin(item.time);
         const dur = parseInt(item.duration, 10) || 20;
-
         if (sMin > 0) {
           bookedBookings.push({ start: sMin, end: sMin + dur });
         }
       }
     });
-
-    try {
-      const localSaved = JSON.parse(localStorage.getItem("parsa_booked_" + selectedDateStr) || "[]");
-      localSaved.forEach(function(b) {
-        bookedBookings.push(b);
-      });
-    } catch (e) {}
 
     renderSlots();
   }
@@ -875,7 +498,6 @@
     const sched = WEEKLY_SCHEDULE[gDate.getDay()];
     const box = document.getElementById('daySlots');
     const labelEl = document.getElementById('shiftLabel');
-
     box.innerHTML = '';
 
     if (!sched || !sched.open) {
@@ -904,7 +526,6 @@
       } else {
         for (let i = 0; i < bookedBookings.length; i++) {
           const b = bookedBookings[i];
-
           if (m < b.end && endMin > b.start) {
             blockReason = "تکمیل";
             break;
@@ -918,7 +539,6 @@
       if (blockReason) {
         btn.classList.add('full');
         btn.innerHTML = '<span class="t-val">' + toFa(tStr) + '</span><span class="t-stat">' + blockReason + '</span>';
-
         btn.onclick = function() {
           if (blockReason === 'تکمیل') {
             showToast("⛔ ساعت " + toFa(tStr) + " قبلاً پر شده یا با نوبت بعدی تداخل دارد!");
@@ -934,14 +554,12 @@
           btn.classList.add('free');
           btn.innerHTML = '<span class="t-val">' + toFa(tStr) + '</span><span class="t-stat">آزاد</span>';
         }
-
         btn.onclick = function() {
           selectedSlot = tStr;
           document.getElementById('sumTime').textContent = "ساعت " + toFa(tStr) + " (" + toFa(currentService.dur) + " دقیقه)";
           renderSlots();
         };
       }
-
       box.appendChild(btn);
     }
   }
@@ -950,20 +568,9 @@
     const name = document.getElementById('custName').value.trim();
     const phone = document.getElementById('custPhone').value.trim();
 
-    if (!selectedSlot) {
-      showToast("⚠️ لطفاً ابتدا یک ساعت آزاد (سبز رنگ) انتخاب کنید.");
-      return;
-    }
-
-    if (name.length < 3) {
-      showToast("⚠️ لطفاً نام و نام خانوادگی خود را وارد کنید.");
-      return;
-    }
-
-    if (phone.length < 10) {
-      showToast("⚠️ لطفاً شماره موبایل معتبر وارد کنید.");
-      return;
-    }
+    if (!selectedSlot) { showToast("⚠️ لطفاً ابتدا یک ساعت آزاد (سبز رنگ) انتخاب کنید."); return; }
+    if (name.length < 3) { showToast("⚠️ لطفاً نام و نام خانوادگی خود را وارد کنید."); return; }
+    if (phone.length < 10) { showToast("⚠️ لطفاً شماره موبایل معتبر وارد کنید."); return; }
 
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
@@ -984,7 +591,6 @@
         method: "POST",
         body: JSON.stringify(payload)
       });
-
       const result = await res.json();
 
       if (result.status === "conflict") {
@@ -995,48 +601,23 @@
       } else if (result.status === "error") {
         showToast("⚠️ خطا در ارتباط با سرور: " + (result.message || "مجدد تلاش کنید."));
       } else {
-        confirmLocalBooking();
+        showToast("✅ نوبت شما با موفقیت ثبت شد و به تلگرام آرایشگر ارسال گردید!", true);
+        selectedSlot = null;
+        document.getElementById('sumTime').textContent = "ثبت شد ✓";
+        document.getElementById('custName').value = "";
+        document.getElementById('custPhone').value = "";
+        await fetchAllBookings();
       }
     } catch (e) {
-      confirmLocalBooking();
+      showToast("⚠️ خطا در اتصال به اینترنت یا سرور؛ لطفاً دوباره امتحان کنید.");
     }
 
     btn.disabled = false;
     btn.textContent = "تأیید و ثبت نوبت ✓";
   }
 
-  function confirmLocalBooking() {
-    showToast("✅ نوبت شما با موفقیت ثبت شد و به تلگرام آرایشگر ارسال گردید!", true);
-
-    const sMin = timeToMin(selectedSlot);
-    const newBlock = { start: sMin, end: sMin + currentService.dur };
-
-    bookedBookings.push(newBlock);
-
-    allServerBookings.push({
-      date: selectedGDateStr,
-      jDate: selectedDateLabel,
-      time: selectedSlot,
-      duration: currentService.dur
-    });
-
-    try {
-      const prev = JSON.parse(localStorage.getItem("parsa_booked_" + selectedDateStr) || "[]");
-      prev.push(newBlock);
-      localStorage.setItem("parsa_booked_" + selectedDateStr, JSON.stringify(prev));
-    } catch (e) {}
-
-    selectedSlot = null;
-    document.getElementById('sumTime').textContent = "ثبت شد ✓";
-    document.getElementById('custName').value = "";
-    document.getElementById('custPhone').value = "";
-
-    renderSlots();
-  }
-
   renderCalendar();
   fetchAllBookings();
 </script>
-
 </body>
 </html>
